@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Calculator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            background: linear-gradient(to right top, seagreen, turquoise);
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 400px;
+            border: 1px solid black;
+            border-radius: 1rem;
+            box-shadow: inset 0 0 20px 2px;
+            padding: 1rem;
+            background-color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Invoice Calculator</h2>
+        <label for="productName">Product Name</label>
+        <input id="productName" type="text" />
+
+        <label for="unitPrice">Unit Price</label>
+        <input id="unitPrice" type="number" />
+
+        <label for="quantity">Quantity</label>
+        <input id="quantity" type="number" />
+
+        <label for="vat">VAT (Tax) in %</label>
+        <input id="vat" type="number" />
+
+        <div class="btn">
+            <button onclick="calculate()">
+                Calculate
+            </button>
+        </div>
+
+        <table id="resultTable" style="display: none;">
+            <tr>
+                <th>Product</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>VAT</th>
+                <th>Total Amount</th>
+            </tr>
+            <tr id="resultRow">
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function calculate() {
+            let productName = document.getElementById('productName').value;
+            let unitPrice = parseFloat(document.getElementById('unitPrice').value);
+            let quantity = parseInt(document.getElementById('quantity').value);
+            let vatRate = parseInt(document.getElementById('vat').value);
+
+            let vat = Math.round((unitPrice * vatRate) / 100 * quantity * 100) / 100;
+            let totalAmount = Math.round((unitPrice * quantity + vat) * 100) / 100;
+
+            // Display the result in the table
+            let resultRow = document.getElementById('resultRow');
+            resultRow.innerHTML = `
+                <td>${productName}</td>
+                <td>${unitPrice.toFixed(2)}</td>
+                <td>${quantity}</td>
+                <td>${vat.toFixed(2)}</td>
+                <td>${totalAmount.toFixed(2)}</td>
+            `;
+
+            // Show the result table
+            let resultTable = document.getElementById('resultTable');
+            resultTable.style.display = 'table';
+        }
+    </script>
+</body>
+</html>

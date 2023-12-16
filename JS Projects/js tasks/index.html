@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            min-height: 100vh;
+            background-image: linear-gradient(to top, #9be15d 0%, #00e3ae 100%);
+            background-repeat: no-repeat;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            border: 1px solid black;
+            border-radius: 1rem;
+            box-shadow: 0 0 20px 2px;
+            padding: 1rem;
+            text-align: center;
+
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            text-align: center;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Invoice Calculator</h2>
+        <label for="product">Product Name</label>
+        <input id="product" type="text" />
+
+        <label for="price">Price</label>
+        <input id="price" type="number" />
+
+        <label for="quantity">Quantity</label>
+        <input id="quantity" type="number" />
+
+        <label for="dds">VAT (Tax) in %</label>
+        <input id="dds" type="number" />
+
+        <div class="btn">
+            <button onclick="calculate()">
+                Calculate
+            </button>
+
+            <button id="btn-reset" onclick="reset()">
+                Reset
+            </button>
+        </div>
+
+    </div>
+
+
+    <div id="result">
+
+    </div>
+
+    <script>
+        function calculate() {
+            let productName = document.getElementById('product').value;
+            let price = parseFloat(document.getElementById('price').value);
+            let quantity = parseInt(document.getElementById('quantity').value);
+            let vatRate = parseInt(document.getElementById('dds').value);
+            let resultElement = document.getElementById('result');
+
+            let vat = ((price * vatRate) / 100) * quantity;
+            let totalAmount = (price * quantity + vat).toFixed(2);
+
+            resultElement.innerHTML = `Product Name: ${productName}<br> Price: 
+            ${price}<br> quantity:${quantity}<br>VAT: ${vat.toFixed(2)}
+            <br>Total Amount: ${totalAmount}`;
+
+
+
+        }
+        function reset() {
+            //const resetBtn = document.getElementById('#btn-reset').reset();
+            document.getElementById('product').value = '';
+            document.getElementById('price').value = '';
+            document.getElementById('quantity').value = '';
+            document.getElementById('dds').value = '';
+            document.getElementById('result').innerHTML = '';
+        }
+
+    </script>
+</body>
+
+</html>
